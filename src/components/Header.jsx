@@ -1,5 +1,8 @@
+import { useState } from "react";
 import Container from "./Container";
 import { AiFillInstagram } from "react-icons/ai";
+import { IoIosCloseCircle } from "react-icons/io";
+
 import {
   FaFacebook,
   FaYoutube,
@@ -7,6 +10,7 @@ import {
   FaUserAlt,
   FaHeart,
   FaSearch,
+  FaBars,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -75,6 +79,11 @@ const iconsPages = [
 ];
 
 export default function Header() {
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  function handleClick() {
+    setShowMobileMenu((prev) => !prev);
+  }
+
   return (
     <header>
       {/* the top header (brown) */}
@@ -100,7 +109,18 @@ export default function Header() {
             <Link to="/">
               <p className="text-2xl capitalize cursor-pointer">supro</p>
             </Link>
-            <ul className="flex gap-8">
+
+            <button
+              onClick={() => handleClick()}
+              className="md:hidden flex flex-col gap-1 cursor-pointer hover:rotate-90 transition-transform duration-300"
+            >
+              {/* <FaBars />  */}
+              <span className="h-1 w-6 bg-primary-400 inline-block rounded-sm "></span>
+              <span className="h-1 w-6 bg-primary-400 inline-block rounded-sm "></span>
+              <span className="h-1 w-6 bg-primary-400 inline-block rounded-sm "></span>
+            </button>
+
+            <ul className="hidden md:flex gap-8">
               {navLinks.map((link) => (
                 // this is doen using the border
                 <li
@@ -118,7 +138,7 @@ export default function Header() {
                 </li>
               ))}
             </ul>
-            <div className="flex gap-4">
+            <div className="hidden  md:flex gap-4">
               {iconsPages.map((icon) => (
                 <Link
                   key={icon.id}
@@ -132,6 +152,26 @@ export default function Header() {
           </nav>
         </Container>
       </div>
+
+      {/* mobile menu  */}
+      {showMobileMenu && (
+        <div className="fixed md:hidden top-[90px] right-0 w-1/2 h-[calc(100vh-90px)] bg-primary-50 flex items-center justify-center text-center">
+            <nav className="flex flex-col gap-4">
+              {/* <button onClick={() => setShowMobileMenu(false)} className="cursor-pointer text-center inline-block">
+                <IoIosCloseCircle className="inline-block text-5xl"/>
+              </button> */}
+              {navLinks.map((link) => (
+                <Link
+                  key={link.id}
+                  to={link.url}
+                  className="capitalize hover:text-primary-500 transition-colors duration-300 inline-block"
+                >
+                  {link.text}
+                </Link>
+              ))}
+            </nav>
+        </div>
+      )}
     </header>
   );
 }
