@@ -12,7 +12,7 @@ export default function HomeHero() {
         />
       </div>
 
-      <div className="max-w-[400px]">
+      <div className="max-w-[400px] w-full">
         <h2 className="text-primary-600 text-2xl font-light uppercase">next arrival</h2>
         <h1 className="text-6xl font-bold capitalize text-primary-500">
           light nylon outerwear

@@ -156,20 +156,20 @@ export default function Header() {
       {/* mobile menu  */}
       {showMobileMenu && (
         <div className="fixed md:hidden top-[90px] right-0 w-1/2 h-[calc(100vh-90px)] bg-primary-50 flex items-center justify-center text-center">
-            <nav className="flex flex-col gap-4">
-              {/* <button onClick={() => setShowMobileMenu(false)} className="cursor-pointer text-center inline-block">
+          <nav className="flex flex-col gap-4">
+            {/* <button onClick={() => setShowMobileMenu(false)} className="cursor-pointer text-center inline-block">
                 <IoIosCloseCircle className="inline-block text-5xl"/>
               </button> */}
-              {navLinks.map((link) => (
-                <Link
-                  key={link.id}
-                  to={link.url}
-                  className="capitalize hover:text-primary-500 transition-colors duration-300 inline-block"
-                >
-                  {link.text}
-                </Link>
-              ))}
-            </nav>
+            {navLinks.map((link) => (
+              <Link
+                key={link.id}
+                to={link.url}
+                className="capitalize hover:text-primary-500 transition-colors duration-300 inline-block"
+              >
+                {link.text}
+              </Link>
+            ))}
+          </nav>
         </div>
       )}
     </header>
