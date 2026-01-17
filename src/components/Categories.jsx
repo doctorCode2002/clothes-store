@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Container from "./Container";
+import { IoStarSharp } from "react-icons/io5";
 
 const DEFAULT_CATEGORY = "mens-shirts";
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
   const [selectedSlug, setSelectedSlug] = useState(DEFAULT_CATEGORY);
-
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -56,42 +58,73 @@ export default function Categories() {
   }, [selectedSlug]);
 
   return (
-    <div>
-      {/* Categories */}
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-        {categories.map((c) => (
-          <button
-            key={c.slug}
-            onClick={() => setSelectedSlug(c.slug)}
-            style={{
-              padding: "8px 12px",
-              borderRadius: 10,
-              border: "1px solid #ccc",
-              background: selectedSlug === c.slug ? "#000" : "transparent",
-              color: selectedSlug === c.slug ? "#fff" : "#000",
-              cursor: "pointer",
-            }}
-          >
-            {c.name}
-          </button>
-        ))}
-      </div>
+    <section className="bg-primary-50 py-12">
+      <Container>
+        {/* Categories */}
+        <div className="flex gap-4 flex-wrap mb-4">
+          {categories.map((c) => (
+            <button
+              key={c.slug}
+              onClick={() => {
+                setSelectedSlug(c.slug);
+              }}
+              className={` border-b-2  hover:border-b-primary-500 duration-300 transition-all cursor-pointer  ${
+                selectedSlug === c.slug
+                  ? "border-b-primary-500"
+                  : "border-b-transparent "
+              }`}
+            >
+              {c.name}
+            </button>
+          ))}
+        </div>
 
-      {/* Products */}
-      <div style={{ marginTop: 20 }}>
-        {loading ? (
-          <p>Loading products...</p>
-        ) : (
-          products.map((p) => (
-            <div key={p.id}>
-              <strong>{p.title}</strong> — ${p.price}
-              <img src={p.images[0]} alt="" />
-            </div>
-          ))
-        )}
-      </div>
-    </div>
+        {/* Products */}
+        <div className="flex gap-2">
+          {loading ? (
+            <p>Loading products...</p>
+          ) : (
+            products.map((p) => (
+              <Link
+                to={`/products/${p.id}`}
+                key={p.id}
+                className="inline-block"
+              >
+                <div className=" border border-primary-200 p-4 w-fit flex flex-col gap-2">
+                  <div className="w-[200px] aspect-square flex items-center justify-center bg-white">
+                    <img
+                      src={p.images[0]}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <h3>
+                    {p.title.split(" ").length > 4
+                      ? p.title.split(" ").slice(0, 4).join(" ") + "…"
+                      : p.title}
+                  </h3>
+                  <div className="flex gap-1">
+                    {Array.from({ length: 5 }).map((_, i) =>
+                      i < Math.round(p.rating) ? (
+                        <IoStarSharp key={i} className="text-yellow-400" />
+                      ) : (
+                        <IoStarSharp key={i} className="text-gray-300" />
+                      )
+                    )}
+                  </div>
+                  <div>{p.price}</div>
+                  <Link
+                    to={`/products/${p.id}/cart`}
+                    className="inline-block w-fit bg-primary-500 text-white px-2 py-1"
+                  >
+                    Add to Cart
+                  </Link>
+                </div>
+              </Link>
+            ))
+          )}
+        </div>
+      </Container>
+    </section>
   );
 }
-
-

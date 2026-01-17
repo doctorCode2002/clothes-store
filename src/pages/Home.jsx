@@ -8,9 +8,7 @@ export default function Home() {
       <Container className="flex items-center justify-center h-full gap-16 overflow-x-hidden">
         <HomeHero />
       </Container>
-      <Container>
-        <Categories />
-      </Container>
+      <Categories />
     </section>
   );
 }
