@@ -22,7 +22,7 @@ export default function Categories() {
             c.slug.startsWith("mens-") ||
             c.slug.startsWith("womens-") ||
             c.slug === "tops" ||
-            c.slug === "sunglasses"
+            c.slug === "sunglasses",
         );
 
         setCategories(clothingCategories);
@@ -43,7 +43,7 @@ export default function Categories() {
 
       try {
         const res = await fetch(
-          `https://dummyjson.com/products/category/${selectedSlug}`
+          `https://dummyjson.com/products/category/${selectedSlug}`,
         );
         const data = await res.json();
         setProducts(data.products || []);
@@ -80,49 +80,62 @@ export default function Categories() {
         </div>
 
         {/* Products */}
-        <div className="flex gap-2">
-          {loading ? (
-            <p>Loading products...</p>
-          ) : (
-            products.map((p) => (
-              <Link
-                to={`/products/${p.id}`}
-                key={p.id}
-                className="inline-block"
-              >
-                <div className=" border border-primary-200 p-4 w-fit flex flex-col gap-2">
-                  <div className="w-[200px] aspect-square flex items-center justify-center bg-white">
-                    <img
-                      src={p.images[0]}
-                      alt=""
-                      className="w-full h-full object-cover"
-                    />
+        <div className="flex gap-2 overflow-x-hidden">
+          {loading
+            ? //skeleton loading
+              Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="inline-block h-[361px]">
+                  <div className=" border border-primary-200 p-4 w-fit flex flex-col gap-2">
+                    <div className="w-[200px] aspect-square flex items-center justify-center bg-white">
+                      <div className="w-full h-full bg-gray-200 animate-pulse" />
+                    </div>
+                    <div className="w-full h-4 bg-gray-200 animate-pulse" />
+                    <div className="flex gap-1">
+                      <div className="w-4 h-4 bg-gray-200 animate-pulse" />
+                    </div>
+                    <div className="w-4 h-4 bg-gray-200 animate-pulse" />
+                    <div className="inline-block w-fit bg-gray-200  px-2 py-1 animate-pulse"></div>
                   </div>
-                  <h3>
-                    {p.title.split(" ").length > 4
-                      ? p.title.split(" ").slice(0, 4).join(" ") + "…"
-                      : p.title}
-                  </h3>
-                  <div className="flex gap-1">
-                    {Array.from({ length: 5 }).map((_, i) =>
-                      i < Math.round(p.rating) ? (
-                        <IoStarSharp key={i} className="text-yellow-400" />
-                      ) : (
-                        <IoStarSharp key={i} className="text-gray-300" />
-                      )
-                    )}
-                  </div>
-                  <div>{p.price}</div>
-                  <Link
-                    to={`/products/${p.id}/cart`}
-                    className="inline-block w-fit bg-primary-500 text-white px-2 py-1"
-                  >
-                    Add to Cart
-                  </Link>
                 </div>
-              </Link>
-            ))
-          )}
+              ))
+            : products.map((p) => (
+                <Link
+                  to={`/products/${p.id}`}
+                  key={p.id}
+                  className="inline-block"
+                >
+                  <div className=" border border-primary-200 p-4 w-fit flex flex-col gap-2">
+                    <div className="w-[200px] aspect-square flex items-center justify-center bg-white">
+                      <img
+                        src={p.images[0]}
+                        alt=""
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <h3>
+                      {p.title.split(" ").length > 4
+                        ? p.title.split(" ").slice(0, 4).join(" ") + "…"
+                        : p.title}
+                    </h3>
+                    <div className="flex gap-1">
+                      {Array.from({ length: 5 }).map((_, i) =>
+                        i < Math.round(p.rating) ? (
+                          <IoStarSharp key={i} className="text-yellow-400" />
+                        ) : (
+                          <IoStarSharp key={i} className="text-gray-300" />
+                        ),
+                      )}
+                    </div>
+                    <div>{p.price}</div>
+                    <Link
+                      to={`/products/${p.id}/cart`}
+                      className="inline-block w-fit bg-primary-500 text-white px-2 py-1"
+                    >
+                      Add to Cart
+                    </Link>
+                  </div>
+                </Link>
+              ))}
         </div>
       </Container>
     </section>
