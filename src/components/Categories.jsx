@@ -61,7 +61,7 @@ export default function Categories() {
     <section className="bg-primary-50 py-12">
       <Container>
         {/* Categories */}
-        <div className="flex gap-4 flex-wrap mb-4">
+        <div className="flex gap-4 flex-wrap mb-4 items-center justify-center">
           {categories.map((c) => (
             <button
               key={c.slug}
@@ -80,7 +80,7 @@ export default function Categories() {
         </div>
 
         {/* Products */}
-        <div className="flex gap-2 overflow-x-hidden">
+        <div className="flex gap-2 items-center justify-center flex-wrap">
           {loading
             ? //skeleton loading
               Array.from({ length: 8 }).map((_, i) => (
@@ -126,13 +126,13 @@ export default function Categories() {
                         ),
                       )}
                     </div>
-                    <div>{p.price}</div>
-                    <Link
+                    <div>${p.price}</div>
+                    <button
                       to={`/products/${p.id}/cart`}
-                      className="inline-block w-fit bg-primary-500 text-white px-2 py-1"
+                      className="inline-block w-fit bg-primary-500 text-white px-2 py-1 cursor-pointer"
                     >
-                      Add to Cart
-                    </Link>
+                      More Details
+                    </button>
                   </div>
                 </Link>
               ))}

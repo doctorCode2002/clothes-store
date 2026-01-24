@@ -14,6 +14,7 @@ export default function App() {
           <Route path="/products/:id" element={<ProductPage />} />
         </Routes>
       </main>
+      
     </>
   );
 }

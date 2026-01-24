@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Container from "../components/Container";
+import { CartContext } from "../context/CartContextProvider";
+import ProductSkeleton from "../components/ProductSkeleton";
 
 export default function ProductPage() {
   const { id } = useParams();
+  const { cart, addToCart } = useContext(CartContext);
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  console.log(cart);
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -26,32 +30,7 @@ export default function ProductPage() {
 
   // skeleton loading
   if (loading) {
-    return (
-      <>
-        <Container className="flex justify-center gap-4 pt-16">
-          <div className="w-1/2 flex items-center justify-center flex-col">
-            <div className="mb-4 w-1/2 h-1/2">
-              <div className="w-full h-full bg-gray-200 animate-pulse" />
-            </div>
-            <div className="flex gap-2 items-center justify-between w-1/2 h-[100px]">
-              {Array.from({ length: 3 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="w-1/5 h-full bg-gray-200 animate-pulse"
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-2 w-1/2 pt-16">
-            <div className="w-full h-16 bg-gray-200 animate-pulse" />
-            <div className="w-full h-16 bg-gray-200 animate-pulse" />
-            <div className="w-full h-16 bg-gray-200 animate-pulse" />
-            <div className="w-full h-16 bg-gray-200 animate-pulse" />
-          </div>
-        </Container>
-      </>
-    );
+    return <ProductSkeleton />;
   }
 
   if (!product) {
@@ -92,7 +71,10 @@ export default function ProductPage() {
           {product.price}$
         </p>
         <p className="w-full mb-3 text-gray-500">{product.description}</p>
-        <button className="bg-primary-500 text-white px-4 py-2 rounded-lg">
+        <button
+          onClick={() => addToCart(product)}
+          className="bg-primary-500 text-white px-4 py-2 rounded-lg cursor-pointer"
+        >
           add to cart
         </button>
       </div>

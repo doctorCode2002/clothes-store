@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Container from "./Container";
 import { AiFillInstagram } from "react-icons/ai";
 import { IoIosCloseCircle } from "react-icons/io";
@@ -13,6 +13,7 @@ import {
   FaBars,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { CartContext } from "../context/CartContextProvider";
 
 const socialLinks = [
   {
@@ -80,6 +81,7 @@ const iconsPages = [
 
 export default function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const {cart} = useContext(CartContext);
   function handleClick() {
     setShowMobileMenu((prev) => !prev);
   }
@@ -143,8 +145,11 @@ export default function Header() {
                 <Link
                   key={icon.id}
                   to={icon.url}
-                  className="hover:text-primary-400 transition duration-300"
+                  className="relative hover:text-primary-400 transition duration-300"
                 >
+                  {icon.id === 4 && (
+                    <span className="absolute -top-2 -right-2 h-4 aspect-square rounded-full bg-red-500 flex items-center justify-center text-white text-xs">{cart.length}</span>
+                  )}
                   {icon.icon}
                 </Link>
               ))}
@@ -155,11 +160,16 @@ export default function Header() {
 
       {/* mobile menu  */}
       {showMobileMenu && (
-        <div className="fixed md:hidden top-[90px] right-0 w-1/2 h-[calc(100vh-90px)] bg-primary-50 flex items-center justify-center text-center">
+        <div className="fixed md:hidden top-0 right-0 w-1/2 h-screen bg-primary-50 flex items-center justify-center text-center">
           <nav className="flex flex-col gap-4">
-            {/* <button onClick={() => setShowMobileMenu(false)} className="cursor-pointer text-center inline-block">
-                <IoIosCloseCircle className="inline-block text-5xl"/>
-              </button> */}
+            <button
+              onClick={() => setShowMobileMenu(false)}
+              className="cursor-pointer text-center inline-block"
+            >
+              <span className="absolute top-4 left-4 inline-block text-5xl text-primary-400">
+                <IoIosCloseCircle />
+              </span>
+            </button>
             {navLinks.map((link) => (
               <Link
                 key={link.id}
