@@ -58,7 +58,7 @@ export default function Categories() {
   }, [selectedSlug]);
 
   return (
-    <section className="bg-primary-50 py-12">
+    <section className="bg-primary-50 py-12 ">
       <Container>
         {/* Categories */}
         <div className="flex gap-4 flex-wrap mb-4 items-center justify-center">

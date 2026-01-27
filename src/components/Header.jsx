@@ -81,7 +81,7 @@ const iconsPages = [
 
 export default function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const {cart} = useContext(CartContext);
+  const { cart } = useContext(CartContext);
   function handleClick() {
     setShowMobileMenu((prev) => !prev);
   }
@@ -129,13 +129,6 @@ export default function Header() {
                   key={link.id}
                   className="capitalize border-b-2 border-transparent hover:text-primary-500 transition-colors duration-300 hover:border-b-primary-500"
                 >
-                  {/* 
-
-                        this is done usign pseudon elements
-                 <li
-                   key={link.id}
-                   className="relative z-2 capitalize hover:text-white border-2 border-transparent rounded-xl px-4 py-1  hover:border-primary-500 transition-colors duration-300 before:content-[''] before:absolute before:w-[90px] before:aspect-square before:rounded-full before:bg-primary-500/30 before:-top-20 before:-right-20 hover:before:top-0 hover:before:right-0  before:transition-all before:duration-300 overflow-hidden cursor-pointer before:-z-1 before:ease-linear hover:before:rounded-none"
-                 >*/}
                   <Link to={link.url}>{link.text}</Link>
                 </li>
               ))}
@@ -148,7 +141,9 @@ export default function Header() {
                   className="relative hover:text-primary-400 transition duration-300"
                 >
                   {icon.id === 4 && (
-                    <span className="absolute -top-2 -right-2 h-4 aspect-square rounded-full bg-red-500 flex items-center justify-center text-white text-xs">{cart.length}</span>
+                    <span className="absolute -top-2 -right-2 h-4 aspect-square rounded-full bg-red-500 flex items-center justify-center text-white text-xs">
+                      {cart.length}
+                    </span>
                   )}
                   {icon.icon}
                 </Link>
